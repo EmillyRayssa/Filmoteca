@@ -1,0 +1,59 @@
+<%= form_with model: movie, class: "formulario" do |form| %>
+  <% if movie.errors.any? %>
+    <div class="erros">
+      <% movie.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-grid">
+    <div class="form-poster">
+      <%= form.label :poster_url, "Pôster (link da imagem)" %>
+      <%= form.url_field :poster_url, id: "poster_url", placeholder: "https://..." %>
+      <div class="preview-box">
+        <img id="preview" alt="Prévia do pôster" style="display:none">
+        <span id="preview-vazio">Prévia do pôster</span>
+      </div>
+    </div>
+
+    <div class="form-campos">
+      <%= form.label :title, "Título" %>
+      <%= form.text_field :title %>
+
+      <div class="duas-colunas">
+        <div>
+          <%= form.label :director, "Diretor(a)" %>
+          <%= form.text_field :director %>
+        </div>
+        <div>
+          <%= form.label :genre, "Gênero" %>
+          <%= form.text_field :genre %>
+        </div>
+      </div>
+
+      <div class="duas-colunas">
+        <div>
+          <%= form.label :release_year, "Ano de lançamento" %>
+          <%= form.number_field :release_year %>
+        </div>
+        <div>
+          <%= form.label :rating, "Sua nota" %>
+          <%= form.select :rating, (1..5).map { |n| ["#{'★' * n} (#{n})", n] } %>
+        </div>
+      </div>
+
+      <%= form.label :synopsis, "Sinopse" %>
+      <%= form.text_area :synopsis, id: "sinopse", maxlength: 300, rows: 3 %>
+      <small id="contador">0/300</small>
+
+      <%= form.label :review, "Minha opinião" %>
+      <%= form.text_area :review, rows: 3, placeholder: "O que você achou do filme?" %>
+    </div>
+  </div>
+
+  <div class="acoes">
+    <%= form.submit "Salvar", class: "btn btn-vermelho" %>
+    <%= link_to "Cancelar", movies_path, class: "btn btn-escuro" %>
+  </div>
+<% end %>

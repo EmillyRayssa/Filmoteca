@@ -1,0 +1,32 @@
+<article class="detalhe">
+  <div class="detalhe-poster">
+    <span class="poster-fallback"><%= @movie.title %></span>
+    <% if @movie.poster_url.present? %>
+      <%= image_tag @movie.poster_url, alt: @movie.title, onerror: "this.style.display='none'" %>
+    <% end %>
+  </div>
+
+  <div class="detalhe-info">
+    <h1><%= @movie.title %></h1>
+    <p class="sub"><%= @movie.release_year %> · Dirigido por <strong><%= @movie.director %></strong></p>
+    <span class="tag"><%= @movie.genre %></span>
+
+    <div class="nota">
+      <span class="estrelas grande" data-nota="<%= @movie.rating %>"></span>
+      <span class="nota-num"><%= @movie.rating %>/5</span>
+    </div>
+
+    <h3>Sinopse</h3>
+    <p><%= @movie.synopsis.presence || "Sem sinopse." %></p>
+
+    <% if @movie.review.present? %>
+      <h3>Minha opinião</h3>
+      <blockquote><%= @movie.review %></blockquote>
+    <% end %>
+
+    <div class="acoes">
+      <%= link_to "Editar", edit_movie_path(@movie), class: "btn btn-vermelho" %>
+      <%= link_to "← Voltar", movies_path, class: "btn btn-escuro" %>
+    </div>
+  </div>
+</article>

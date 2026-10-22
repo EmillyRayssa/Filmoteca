@@ -1,0 +1,46 @@
+<section class="hero">
+  <div>
+    <h1>Meus Filmes</h1>
+    <p class="sub">Seu diário de filmes assistidos</p>
+  </div>
+  <div class="stats">
+    <div><strong><%= @movies.size %></strong><span>filmes</span></div>
+    <div><strong><%= @movies.average(:rating)&.round(1) || "–" %></strong><span>nota média</span></div>
+  </div>
+</section>
+
+<input type="text" id="busca" class="busca" placeholder=" Buscar por título...">
+
+<div class="grade">
+  <% @movies.each do |movie| %>
+    <article class="item" data-titulo="<%= movie.title.downcase %>">
+      <%= link_to movie, class: "poster" do %>
+        <span class="poster-fallback"><%= movie.title %></span>
+        <% if movie.poster_url.present? %>
+          <%= image_tag movie.poster_url, alt: movie.title, onerror: "this.style.display='none'" %>
+        <% end %>
+        <span class="overlay">
+          <span class="estrelas" data-nota="<%= movie.rating %>"></span>
+        </span>
+      <% end %>
+
+      <div class="meta">
+        <h2><%= movie.title %></h2>
+        <p><%= movie.release_year %> · <%= movie.genre %></p>
+      </div>
+
+      <div class="acoes">
+        <%= link_to "Editar", edit_movie_path(movie), class: "btn btn-escuro btn-pequeno" %>
+        <%= button_to "Excluir", movie, method: :delete, class: "btn btn-contorno btn-pequeno",
+              form: { data: { turbo_confirm: "Tem certeza que deseja excluir?" } } %>
+      </div>
+    </article>
+  <% end %>
+</div>
+
+<% if @movies.empty? %>
+  <div class="vazio">
+    <p>🎞️ Nenhum filme registrado ainda.</p>
+    <%= link_to "Registrar o primeiro filme", new_movie_path, class: "btn btn-vermelho" %>
+  </div>
+<% end %>
