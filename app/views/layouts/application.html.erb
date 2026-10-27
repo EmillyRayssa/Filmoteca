@@ -22,14 +22,20 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body><body>
   <header class="topo">
     <div class="topo-interno">
       <%= link_to root_path, class: "logo" do %>
         <img src="/icon.svg" alt="" width="28" height="28">
         <span>Filmoteca</span>
       <% end %>
-      <%= link_to "+ Registrar filme", new_movie_path, class: "btn btn-vermelho btn-pequeno" %>
+
+      <% if authenticated? %>
+        <div class="topo-acoes">
+          <%= link_to "+ Registrar filme", new_movie_path, class: "btn btn-vermelho btn-pequeno" %>
+          <%= button_to "Sair", session_path, method: :delete, class: "btn btn-escuro btn-pequeno" %>
+        </div>
+      <% end %>
     </div>
   </header>
 
@@ -37,9 +43,11 @@
     <% if notice %>
       <p class="aviso"><%= notice %></p>
     <% end %>
+    <% if alert %>
+      <p class="erros"><%= alert %></p>
+    <% end %>
     <%= yield %>
   </main>
-
   <footer class="rodape">Feito com Ruby on Rails </footer>
 </body>
 </html>

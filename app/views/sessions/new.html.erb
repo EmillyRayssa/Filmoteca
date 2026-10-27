@@ -1,0 +1,20 @@
+<div class="login-box">
+  <div class="login-logo">
+    <img src="/icon.svg" alt="" width="56" height="56">
+    <h1>Filmoteca</h1>
+    <p class="sub">Entre para ver seus filmes</p>
+  </div>
+
+  <%= form_with url: session_path, class: "formulario" do |form| %>
+    <%= form.label :email_address, "Email" %>
+    <%= form.email_field :email_address, required: true, autofocus: true,
+          autocomplete: "username", placeholder: "seu@email.com",
+          value: params[:email_address] %>
+
+    <%= form.label :password, "Senha" %>
+    <%= form.password_field :password, required: true,
+          autocomplete: "current-password", placeholder: "Sua senha" %>
+
+    <%= form.submit "Entrar", class: "btn btn-vermelho btn-largo" %>
+  <% end %>
+</div>
